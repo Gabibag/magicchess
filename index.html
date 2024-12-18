@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkers Board</title>
+</head>
+<body>
+    <div class="board-container">
+        <div class="row-labels" style="margin-top: 3vw;">
+            <div class="row-label">1</div>
+            <div class="row-label">2</div>
+            <div class="row-label">3</div>
+            <div class="row-label">4</div>
+            <div class="row-label">5</div>
+        </div>
+        <div>
+            <div class="column-labels" style="margin-left: 1vw;">
+                <div class="column-label">A</div>
+                <div class="column-label">B</div>
+                <div class="column-label">C</div>
+                <div class="column-label">D</div>
+                <div class="column-label" style="margin-left: 0;">E</div>
+            </div>
+            <div class="board" id="board"></div>
+        </div>
+    </div>
+    <button onclick="checkKey()">Check Key</button>
+</body>
+</html>
+
+<style>
+    .board-container {
+        /* center board-container */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        display: flex;
+
+    }
+    .row-labels, .board {
+        display: flex;
+        flex-direction: column;
+    }
+    .row-labels {
+        margin-right: 5px;
+        font-size: 1.5vw;
+    }
+    .row-label {
+        height: 10vw;
+        margin-bottom: 1vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .board {
+        display: grid;
+        grid-template-columns: repeat(5, 20px);
+        
+    }
+    .cell {
+        width: 20px;
+        height: 20px;
+    }
+    .column-labels {
+        display: flex;
+        margin-bottom: 5px;
+    }
+    .column-label {
+        width: 10vw;
+        margin-right: 1vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #board {
+        display: grid;
+        grid-template-columns: repeat(5, 10vw);
+        grid-template-rows: repeat(5, 10vw);
+        gap: 1vw;
+        margin: 1vw auto;
+        
+    }
+
+    .cell {
+        width: 10vw;
+        height: 10vw;
+        background-color: #6dcc08;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .cell.with-checker {
+        background-color: #ef0000;
+    }
+
+    /*bottom right*/
+    button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 1vw;
+        padding: 1vw;
+        font-size: 1.5vw;
+        cursor: pointer;
+        background-color: #6dcc08;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+    const board = document.getElementById('board');
+        const key = [
+            [0, 2], [1, 1], [2, 3], [3, 4], [4, 3]
+        ]; // Example key positions
+        const boardState = Array(5).fill().map(() => Array(5).fill(false));
+    document.addEventListener('DOMContentLoaded', () => {
+        
+
+        function createBoard() {
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 5; col++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    cell.addEventListener('click', toggleChecker);
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function toggleChecker(event) {
+            const cell = event.target;
+            const row = cell.dataset.row;
+            const col = cell.dataset.col;
+            boardState[row][col] = !boardState[row][col];
+            cell.classList.toggle('with-checker');
+        }
+
+        function checkKey() {
+            for (const [row, col] of key) {
+                if (!boardState[row][col]) {
+                    return;
+                }
+            }
+            alert('Key matched! Resetting board...');
+            resetBoard();
+        }
+
+        function resetBoard() {
+            boardState.forEach((row, rowIndex) => {
+                row.forEach((_, colIndex) => {
+                    const cell = document.querySelector(`.cell[data-row="${rowIndex}"][data-col="${colIndex}"]`);
+                    cell.classList.remove('with-checker');
+                });
+            });
+        }
+
+        createBoard();
+    });
+    function checkKey() {
+        // Get all selected cells
+        const selectedCells = document.querySelectorAll('.cell.with-checker');
+        const selectedPositions = Array.from(selectedCells).map(cell => ({
+            row: parseInt(cell.dataset.row),
+            col: parseInt(cell.dataset.col)
+        }));
+
+        // Check if number of selected cells matches key length
+        if (selectedPositions.length !== key.length) {
+            alert('Wrong number of positions selected!');
+            resetBoard();
+            return;
+        }
+
+        // Check if positions match key positions
+        const correct = key.every(([keyRow, keyCol]) =>
+            selectedPositions.some(pos => pos.row === keyRow && pos.col === keyCol)
+        );
+
+        if (correct) {
+            alert('Congratulations! You found the correct pattern!');
+        } else {
+            alert('Wrong pattern. Try again!');
+        }
+        resetBoard();
+    }
+</script>
