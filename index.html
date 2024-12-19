@@ -90,13 +90,13 @@
     }
 
     body{
-        background-color: #6dcc08;
+        background: radial-gradient(circle at center,#d4e5f5ff, #70a4d5ff);
     }
     .cell {
         width: 10vw;
         height: 10vw;
         border-radius: 1vw;
-        background-color: #6dcc08;
+        background-color: #70a4d5ff;
         box-shadow: 0.1vw 0.3vw 0.5vw 0.05vw rgba(0, 0, 0, 0.27);
         display: flex;
         align-items: center;
@@ -106,7 +106,7 @@
     }
     .cell:hover{
         scale: 1.01;
-        background-color: #7fec0b;
+        background-color: #70a4d5ff;
         box-shadow: 0.12vw 0.35vw 0.6vw 0.06vw rgba(0, 0, 0, 0.27);
     }
     .cell:active{
@@ -210,7 +210,7 @@
         );
 
         if (correct) {
-            alert('Congratulations! You found the correct pattern!');
+            alert('this make sure');
         } else {
             alert('Wrong pattern. Try again!');
         }
