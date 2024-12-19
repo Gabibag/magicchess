@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Miss+Fajardose&display=swap');
+    </style>
     <title>Checkers Board</title>
 </head>
 <body>
@@ -30,6 +33,10 @@
 </html>
 
 <style>
+    *{
+        font-family: "Miss Fajardose", serif;
+        font-weight: bold;
+    }
     .board-container {
         /* center board-container */
         position: absolute;
@@ -43,10 +50,11 @@
     .row-labels, .board {
         display: flex;
         flex-direction: column;
+
     }
     .row-labels {
-        margin-right: 5px;
-        font-size: 1.5vw;
+        margin-right: 1vw;
+        font-size: 3.5vw !important;
     }
     .row-label {
         height: 10vw;
@@ -60,13 +68,10 @@
         grid-template-columns: repeat(5, 20px);
         
     }
-    .cell {
-        width: 20px;
-        height: 20px;
-    }
     .column-labels {
         display: flex;
         margin-bottom: 5px;
+        font-size: 2.5vw !important;
     }
     .column-label {
         width: 10vw;
@@ -75,7 +80,6 @@
         align-items: center;
         justify-content: center;
     }
-
     #board {
         display: grid;
         grid-template-columns: repeat(5, 10vw);
@@ -85,18 +89,38 @@
         
     }
 
+    body{
+        background-color: #6dcc08;
+    }
     .cell {
         width: 10vw;
         height: 10vw;
+        border-radius: 1vw;
         background-color: #6dcc08;
+        box-shadow: 0.1vw 0.3vw 0.5vw 0.05vw rgba(0, 0, 0, 0.27);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        transition: 0.2s;
+    }
+    .cell:hover{
+        scale: 1.01;
+        background-color: #7fec0b;
+        box-shadow: 0.12vw 0.35vw 0.6vw 0.06vw rgba(0, 0, 0, 0.27);
+    }
+    .cell:active{
+        scale: 0.97;
+    }
+    .cell.with-checker {
+        background-color: #c40000;
+        scale: 0.95;
+        box-shadow: 0.1vw 0.3vw 0.5vw 0.05vw rgba(0, 0, 0, 0.66) inset;
     }
 
-    .cell.with-checker {
-        background-color: #ef0000;
+    .cell.with-checker:hover {
+        scale: 0.97;
+        background-color: #fa5858;
     }
 
     /*bottom right*/
@@ -106,18 +130,18 @@
         right: 0;
         margin: 1vw;
         padding: 1vw;
-        font-size: 1.5vw;
+        font-size: 2vw;
         cursor: pointer;
-        background-color: #6dcc08;
+        background-color: #356e00;
         border: none;
-        border-radius: 5px;
+        border-radius: 1vw;
     }
 </style>
 
 <script>
     const board = document.getElementById('board');
         const key = [
-            [0, 2], [1, 1], [2, 3], [3, 4], [4, 3]
+            [0, 2], [1, 1], [2, 3], [3,0], [3, 4], [4,2], [4, 3]
         ]; // Example key positions
         const boardState = Array(5).fill().map(() => Array(5).fill(false));
     document.addEventListener('DOMContentLoaded', () => {
