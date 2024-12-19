@@ -168,27 +168,18 @@
             cell.classList.toggle('with-checker');
         }
 
-        function checkKey() {
-            for (const [row, col] of key) {
-                if (!boardState[row][col]) {
-                    return;
-                }
-            }
-            alert('Key matched! Resetting board...');
-            resetBoard();
-        }
 
-        function resetBoard() {
-            boardState.forEach((row, rowIndex) => {
-                row.forEach((_, colIndex) => {
-                    const cell = document.querySelector(`.cell[data-row="${rowIndex}"][data-col="${colIndex}"]`);
-                    cell.classList.remove('with-checker');
-                });
-            });
-        }
 
         createBoard();
     });
+    function resetBoard() {
+        boardState.forEach((row, rowIndex) => {
+            row.forEach((_, colIndex) => {
+                const cell = document.querySelector(`.cell[data-row="${rowIndex}"][data-col="${colIndex}"]`);
+                cell.classList.remove('with-checker');
+            });
+        });
+    }
     function checkKey() {
         // Get all selected cells
         const selectedCells = document.querySelectorAll('.cell.with-checker');
